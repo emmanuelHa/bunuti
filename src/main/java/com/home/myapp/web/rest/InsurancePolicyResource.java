@@ -149,12 +149,7 @@ public class InsurancePolicyResource {
 
         LOG.debug("REST request to get a page of insurancePolicies");
         Page<InsurancePolicy> page;
-        if (eagerload) {
-            //page = insurancePolicyRepository.findAllWithEagerRelationships(pageable);
-            page = insurancePolicyRepository.findAll(pageable);
-        } else {
-            page = insurancePolicyRepository.findAll(pageable);
-        }
+        page = insurancePolicyRepository.findAll(pageable);
         // TODO deal with headers
         return ResponseEntity.ok().body(page.getContent());
     }
@@ -168,7 +163,6 @@ public class InsurancePolicyResource {
     @GetMapping("/{id}")
     public ResponseEntity<InsurancePolicy> getInsurancePolicy(@PathVariable("id") Long id) {
         LOG.debug("REST request to get InsurancePolicy : {}", id);
-        //Optional<InsurancePolicy> insurancePolicy = insurancePolicyRepository.findOneWithEagerRelationships(id.intValue());
         Optional<InsurancePolicy> insurancePolicy = insurancePolicyRepository.findById(id.intValue());
         // TODO deal with headers
         return insurancePolicy.map((insurance) -> ResponseEntity.ok().body(insurance))
